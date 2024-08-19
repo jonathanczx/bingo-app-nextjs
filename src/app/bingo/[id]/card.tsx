@@ -26,6 +26,17 @@ export default function BingoCard({card} : {card: CardType}) {
   const cancelRef = useRef()
   const router = useRouter();
 
+  const copyUrlToClipboard = () => {
+    navigator.clipboard.writeText(window.location.href);
+    toast({
+      title: 'Copied to clipboard!',
+      status: 'success',
+      duration: 9000,
+      isClosable: true,
+      position: 'bottom-right'
+    });
+  }
+
   const handlePullNumber = async () => {
     try {
       const response = await pullNumber(card.id as string);
@@ -111,6 +122,9 @@ export default function BingoCard({card} : {card: CardType}) {
             <Button flex="1" colorScheme="green" onClick={() => handleScoreCard()}>Get Score</Button>
         )}    
         <Button flex="1" colorScheme="blue" onClick={() => handlePullNumber()}>Call Next Number</Button>
+      </Box>
+      <Box paddingY={4} w="100%" display="flex" flexDirection="row" justifyContent="space-between" gap={4}>
+        <Button flex="1" colorScheme="gray" onClick={() => copyUrlToClipboard() }>Share Card</Button>
       </Box>
       <AlertDialog
         motionPreset='slideInBottom'
